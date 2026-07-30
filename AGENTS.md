@@ -8,7 +8,7 @@ Open **this folder alone** in a Cursor window (File → New Window → Open Fold
 
 1. `npm install && npm run compile`
 2. Press **F5** (Run Extension) → Extension Development Host
-3. Or symlink: `ln -sfn "$(pwd)" ~/.cursor/extensions/context-snack-1.2.4` then Reload Window
+3. Or symlink: `ln -sfn "$(pwd)" ~/.cursor/extensions/context-snack-1.4.0` then Reload Window
 
 ## After UI / feed changes
 

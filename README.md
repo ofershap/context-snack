@@ -75,7 +75,7 @@ npm install
 npm run compile
 ```
 
-Press **F5** (or **Run Extension** from `.vscode/launch.json`) to launch an Extension Development Host, or symlink the folder to `~/.cursor/extensions/context-snack-1.2.4` and reload the window.
+Press **F5** (or **Run Extension** from `.vscode/launch.json`) to launch an Extension Development Host, or symlink the folder to `~/.cursor/extensions/context-snack-1.4.0` and reload the window.
 
 Maintainer publish notes: [docs/MARKETPLACE.md](docs/MARKETPLACE.md).
 

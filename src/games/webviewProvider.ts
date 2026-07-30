@@ -136,119 +136,334 @@ export class GameWebviewProvider {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Context Snack</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             margin: 0;
-            padding: 20px;
-            background: #1e1e1e;
-            color: #d4d4d4;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 8px 8px 10px;
+            background: #171514;
+            color: #ebe4dc;
+            font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
-            box-sizing: border-box;
+            min-height: 100vh;
         }
-        
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-            color: #569cd6;
+        body.vscode-light {
+            background: #f3eee8;
+            color: #1c1917;
         }
-
-        #breakText {
-            text-align: center;
-            color: #9cdcfe;
-            font-style: italic;
+        button {
+            background: #252321;
+            color: #ebe4dc;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 11px;
+            font-family: inherit;
+        }
+        button:hover {
+            background: #2e2b28;
+            border-color: rgba(46,184,166,0.35);
+        }
+        body.vscode-light button {
+            background: #fff;
+            color: #1c1917;
+            border-color: rgba(0,0,0,0.1);
+        }
+        body.vscode-light button:hover {
+            background: #f7f2ec;
+            border-color: rgba(20,140,120,0.4);
+        }
+        #closeBtn { color: #c4a8a0; }
+        #closeBtn:hover {
+            border-color: rgba(196,168,160,0.35);
+            background: #2a2321;
+        }
+        body.vscode-light #closeBtn:hover { background: #f7f2ec; }
+        .shell {
+            width: 100%;
+            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .card-chrome {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        body.vscode-light .card-chrome {
+            border-bottom-color: rgba(0,0,0,0.08);
+        }
+        .card-chrome-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 0;
+        }
+        .card-chrome-title {
             font-size: 13px;
-            max-width: 400px;
-            margin-bottom: 14px;
-            min-height: 18px;
+            font-weight: 600;
+            color: #ebe4dc;
+            letter-spacing: 0.01em;
         }
-        
-        #gameContainer {
+        body.vscode-light .card-chrome-title { color: #1c1917; }
+        .card-chrome-subtitle {
+            font-size: 10px;
+            font-weight: 500;
+            color: #7a726a;
+            letter-spacing: 0.01em;
+            min-height: 14px;
+        }
+        body.vscode-light .card-chrome-subtitle { color: #6b635c; }
+        .card-chrome-actions {
             display: flex;
-            flex-direction: column;
+            gap: 4px;
+            flex-shrink: 0;
             align-items: center;
-            gap: 15px;
         }
-        
+        .chrome-icon-btn {
+            width: 30px;
+            height: 28px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            line-height: 1;
+        }
+        .chrome-icon-btn.is-muted,
+        #muteBtn.is-muted {
+            opacity: 0.75;
+            border-color: rgba(46,184,166,0.4);
+        }
+        .stage {
+            display: flex;
+            align-items: stretch;
+            gap: 10px;
+            background: #d9cdb0;
+            border-radius: 22px;
+            padding: 16px 12px 16px 16px;
+            border: 1px solid #b8a88a;
+            box-shadow:
+                0 16px 40px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.35),
+                inset 0 -1px 0 rgba(90,70,40,0.12);
+        }
+        body.vscode-light .stage {
+            background: #e8dcc4;
+            border-color: #c4b496;
+            box-shadow:
+                0 12px 28px rgba(0,0,0,0.12),
+                inset 0 1px 0 rgba(255,255,255,0.55);
+        }
+        .stage-frame {
+            position: relative;
+            flex: 1;
+            min-width: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #111;
+            padding: 7px;
+            box-shadow:
+                inset 0 0 0 1px #2a2a2a,
+                0 1px 0 rgba(255,255,255,0.2);
+        }
         #gameCanvas {
-            border: 2px solid #569cd6;
+            display: block;
+            width: 100%;
+            height: auto;
             background: #000;
+            border: none;
+            border-radius: 8px;
             image-rendering: pixelated;
         }
-        
-        #gameInfo {
+        .screen-glass {
+            position: absolute;
+            inset: 7px;
+            pointer-events: none;
+            border-radius: 8px;
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    transparent 0,
+                    transparent 2px,
+                    rgba(255,255,255,0.03) 2px,
+                    rgba(255,255,255,0.03) 3px
+                ),
+                radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.32) 100%);
+        }
+        .tv-side {
+            width: 28px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: #634735;
             display: flex;
-            gap: 20px;
-            font-size: 16px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 10px 6px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
         }
-        
-        #controls {
+        .tv-grill {
+            width: 12px;
+            flex: 1;
+            max-height: 72px;
+            margin-bottom: 10px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #3d2a1f 0 2px,
+                transparent 2px 5px
+            );
+            border-radius: 2px;
+            opacity: 0.85;
+        }
+        .tv-led {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #2eb8a6;
+            box-shadow: 0 0 5px rgba(46,184,166,0.65);
+        }
+        .hud {
+            position: absolute;
+            top: 14px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            pointer-events: none;
+            font-family: ui-monospace, "IBM Plex Mono", "Cascadia Mono", monospace;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.85);
+        }
+        .hud-game {
+            color: #ebe4dc;
+            font-size: 10px;
+            letter-spacing: 0.04em;
+            text-transform: none;
+            max-width: 40%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .hud-score,
+        .hud-hi {
+            color: #9a9188;
+        }
+        .hud-score span,
+        .hud-hi span {
+            color: #ebe4dc;
+        }
+        .controls-hint {
+            position: absolute;
+            left: 50%;
+            bottom: 12px;
+            transform: translateX(-50%);
+            max-width: 92%;
             text-align: center;
-            margin-top: 10px;
-            color: #9cdcfe;
+            font-size: 11px;
+            line-height: 1.4;
+            color: #c4bbb0;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.55);
+            opacity: 1;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
         }
-        
-        button {
-            background: #0e639c;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 5px;
+        .controls-hint.faded {
+            opacity: 0;
         }
-        
-        button:hover {
-            background: #1177bb;
-        }
-
-        #closeBtn {
-            background: #5a1d1d;
-        }
-
-        #closeBtn:hover {
-            background: #7a2626;
-        }
-
-        #feedBtn {
-            background: #2d5a3d;
-        }
-
-        #feedBtn:hover {
-            background: #397a4f;
-        }
-
-        .game-over {
+        #gameOverMessage.game-over {
+            position: absolute;
+            inset: 7px;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            color: #f14c4c;
-            font-size: 18px;
+            padding: 16px;
+            background: rgba(23,21,20,0.78);
+            color: #f0a0a0;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        body.vscode-light #gameOverMessage.game-over {
+            background: rgba(243,238,232,0.88);
+            color: #b85c5c;
+        }
+        .footer-actions {
+            display: flex;
+            justify-content: center;
+            padding-top: 2px;
+        }
+        #newGameBtn {
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            background: transparent;
+            color: #2eb8a6;
+            border-color: rgba(46,184,166,0.35);
+        }
+        #newGameBtn:hover {
+            background: rgba(46,184,166,0.08);
+            border-color: rgba(46,184,166,0.5);
+        }
+        body.vscode-light #newGameBtn {
+            background: transparent;
+            color: #2eb8a6;
         }
         ${closeCountdownStyles()}
     </style>
 </head>
 <body>
-    <h1>🍿 Context Snack — Game</h1>
-    <div id="breakText"></div>
-    <div id="gameContainer">
-        <canvas id="gameCanvas" width="400" height="300"></canvas>
-        <div id="gameInfo">
-            <span>Game: <span id="gameName">-</span></span>
-            <span>Score: <span id="score">0</span></span>
-            <span>High: <span id="highScore">0</span></span>
+    <div class="shell">
+        <div class="card-chrome">
+            <div class="card-chrome-text">
+                <div class="card-chrome-title">🍿 Context Snack</div>
+                <div class="card-chrome-subtitle" id="breakText"></div>
+            </div>
+            <div class="card-chrome-actions">
+                <button id="muteBtn" class="chrome-icon-btn" onclick="muteChat()" title="Do not pop Context Snack for the current agent conversation" aria-label="Do not pop Context Snack for the current agent conversation">🔕</button>
+                <button id="feedBtn" class="chrome-icon-btn" onclick="requestFeed()" title="News instead" aria-label="News instead">📰</button>
+                <button id="closeBtn" class="chrome-icon-btn" onclick="closeGame()" title="Close" aria-label="Close">✕</button>
+            </div>
         </div>
-        <div id="gameOverMessage" style="display: none;" class="game-over">
-            <div>Game Over! Next game in: <span id="countdown">2</span>s</div>
+        <div class="stage">
+            <div class="stage-frame">
+                <canvas id="gameCanvas" width="400" height="300"></canvas>
+                <div class="screen-glass" aria-hidden="true"></div>
+                <div class="hud">
+                    <div class="hud-game" id="gameName">-</div>
+                    <div class="hud-score">SCORE <span id="score">0</span></div>
+                    <div class="hud-hi">HI <span id="highScore">0</span></div>
+                </div>
+                <div id="gameOverMessage" class="game-over">
+                    <div>Game Over! Next game in: <span id="countdown">2</span>s</div>
+                </div>
+                <div id="controls" class="controls-hint">
+                    Use arrow keys or WASD to control<br>
+                    Space for action
+                </div>
+            </div>
+            <div class="tv-side" aria-hidden="true">
+                <div class="tv-grill"></div>
+                <span class="tv-led"></span>
+            </div>
         </div>
-        <div id="controls">
-            Use arrow keys or WASD to control<br>
-            Space for action
+        <div class="footer-actions">
+            <button id="newGameBtn" onclick="requestNewGame()">Next game</button>
         </div>
-        <button id="newGameBtn" onclick="requestNewGame()">New Game</button>
-        <button id="feedBtn" onclick="requestFeed()">📰 News instead</button>
-        <button id="muteBtn" class="chrome-icon-btn" onclick="muteChat()" title="Do not pop Context Snack for the current agent conversation" aria-label="Do not pop Context Snack for the current agent conversation">🔕</button>
-        <button id="closeBtn" onclick="closeGame()">Close</button>
     </div>
     ${closeCountdownMarkup()}
 
@@ -260,6 +475,16 @@ export class GameWebviewProvider {
         let currentGame = null;
         let gameState = null;
         let animationId = null;
+        let controlsHintDismissed = false;
+
+        function fadeControlsHint() {
+            if (controlsHintDismissed) return;
+            controlsHintDismissed = true;
+            const controlsEl = document.getElementById('controls');
+            if (controlsEl) {
+                controlsEl.classList.add('faded');
+            }
+        }
         
         // Auto-focus when the page loads
         window.addEventListener('load', () => {
@@ -293,8 +518,16 @@ export class GameWebviewProvider {
             document.getElementById('gameName').textContent = gameData.name;
             document.getElementById('score').textContent = '0';
             document.getElementById('highScore').textContent = gameData.highScore || '0';
-            document.getElementById('gameOverMessage').style.display = 'none';
+            const gameOverEl = document.getElementById('gameOverMessage');
+            gameOverEl.style.display = 'none';
+            document.getElementById('countdown').textContent = '2';
+            controlsHintDismissed = false;
+            const controlsEl = document.getElementById('controls');
+            if (controlsEl) {
+                controlsEl.classList.remove('faded');
+            }
             
+            keysDown.clear();
             gameState = initializeGame(gameData.type);
             lastUpdateTime = performance.now();
             gameLoop(performance.now());
@@ -312,6 +545,10 @@ export class GameWebviewProvider {
                     return initPong();
                 case 'invaders':
                     return initInvaders();
+                case 'breakout':
+                    return initBreakout();
+                case 'dodge':
+                    return initDodge();
                 default:
                     return initSnake();
             }
@@ -361,11 +598,57 @@ export class GameWebviewProvider {
             };
         }
 
+        function initBreakout() {
+            const bricks = [];
+            const cols = 10;
+            const rows = 5;
+            const brickW = 36;
+            const brickH = 12;
+            const offsetX = 20;
+            const offsetY = 28;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    bricks.push({
+                        x: col * brickW + offsetX,
+                        y: row * (brickH + 4) + offsetY,
+                        w: brickW - 2,
+                        h: brickH,
+                        alive: true
+                    });
+                }
+            }
+            return {
+                paddle: { x: 170, y: 282, width: 60, height: 8 },
+                ball: { x: 200, y: 265, dx: 1.5, dy: -1.2, size: 6 },
+                bricks: bricks,
+                score: 0,
+                gameOver: false
+            };
+        }
+
+        function initDodge() {
+            return {
+                player: { x: 190, y: 268, width: 20, height: 12 },
+                meteors: [],
+                score: 0,
+                gameOver: false,
+                spawnCooldown: 40,
+                tick: 0
+            };
+        }
+
+        const keysDown = new Set();
+        document.addEventListener('keyup', (e) => {
+            keysDown.delete(e.key);
+        });
+
         let lastUpdateTime = 0;
         const gameSpeed = {
             snake: 150,     // Update every 150ms (slower)
             pong: 16,       // ~60fps but with slower ball
-            invaders: 50    // Update every 50ms (slower)
+            invaders: 50,    // Update every 50ms (slower)
+            breakout: 16,
+            dodge: 16
         };
 
         function gameLoop(currentTime) {
@@ -400,6 +683,12 @@ export class GameWebviewProvider {
                     break;
                 case 'invaders':
                     updateInvaders();
+                    break;
+                case 'breakout':
+                    updateBreakout();
+                    break;
+                case 'dodge':
+                    updateDodge();
                     break;
             }
         }
@@ -542,6 +831,108 @@ export class GameWebviewProvider {
             }
         }
 
+        function updateBreakout() {
+            const ball = gameState.ball;
+            const paddle = gameState.paddle;
+            if (keysDown.has('ArrowLeft') || keysDown.has('a') || keysDown.has('A')) {
+                paddle.x = Math.max(0, paddle.x - 4);
+            }
+            if (keysDown.has('ArrowRight') || keysDown.has('d') || keysDown.has('D')) {
+                paddle.x = Math.min(400 - paddle.width, paddle.x + 4);
+            }
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            if (ball.x <= 0 || ball.x >= 400 - ball.size) {
+                ball.dx = -ball.dx;
+                ball.x = Math.max(0, Math.min(400 - ball.size, ball.x));
+            }
+            if (ball.y <= 0) {
+                ball.dy = -ball.dy;
+                ball.y = 0;
+            }
+
+            const ballBottom = ball.y + ball.size;
+            const ballRight = ball.x + ball.size;
+            if (ballBottom >= paddle.y &&
+                ball.y <= paddle.y + paddle.height &&
+                ballRight >= paddle.x &&
+                ball.x <= paddle.x + paddle.width &&
+                ball.dy > 0) {
+                ball.dy = -Math.abs(ball.dy);
+                const hitPos = (ball.x + ball.size / 2 - paddle.x) / paddle.width - 0.5;
+                ball.dx = hitPos * 3;
+                if (Math.abs(ball.dx) < 0.8) {
+                    ball.dx = ball.dx >= 0 ? 0.8 : -0.8;
+                }
+                ball.y = paddle.y - ball.size;
+            }
+
+            for (let brick of gameState.bricks) {
+                if (!brick.alive) continue;
+                if (ballRight >= brick.x &&
+                    ball.x <= brick.x + brick.w &&
+                    ballBottom >= brick.y &&
+                    ball.y <= brick.y + brick.h) {
+                    brick.alive = false;
+                    gameState.score += 10;
+                    ball.dy = -ball.dy;
+                    break;
+                }
+            }
+
+            if (ball.y > 300) {
+                gameState.gameOver = true;
+            }
+
+            if (gameState.bricks.every(b => !b.alive)) {
+                gameState.gameOver = true;
+            }
+        }
+
+        function updateDodge() {
+            const player = gameState.player;
+            if (keysDown.has('ArrowLeft') || keysDown.has('a') || keysDown.has('A')) {
+                player.x = Math.max(0, player.x - 3.5);
+            }
+            if (keysDown.has('ArrowRight') || keysDown.has('d') || keysDown.has('D')) {
+                player.x = Math.min(400 - player.width, player.x + 3.5);
+            }
+            gameState.tick += 1;
+            if (gameState.tick % 40 === 0) {
+                gameState.score += 1;
+            }
+            gameState.spawnCooldown -= 1;
+            if (gameState.spawnCooldown <= 0) {
+                gameState.meteors.push({
+                    x: Math.random() * (400 - 24),
+                    y: -16,
+                    w: 14 + Math.floor(Math.random() * 10),
+                    h: 14 + Math.floor(Math.random() * 8),
+                    vy: 1.5 + Math.random() * 1.2
+                });
+                gameState.spawnCooldown = 45 + Math.floor(Math.random() * 25);
+            }
+
+            gameState.meteors = gameState.meteors.filter(m => {
+                m.y += m.vy;
+                if (m.y > 300) {
+                    gameState.score += 5;
+                    return false;
+                }
+                const px = player.x;
+                const py = player.y;
+                const pw = player.width;
+                const ph = player.height;
+                if (m.x + m.w > px && m.x < px + pw &&
+                    m.y + m.h > py && m.y < py + ph) {
+                    gameState.gameOver = true;
+                    return false;
+                }
+                return true;
+            });
+        }
+
         function render() {
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, 400, 300);
@@ -559,6 +950,12 @@ export class GameWebviewProvider {
                     break;
                 case 'invaders':
                     renderInvaders();
+                    break;
+                case 'breakout':
+                    renderBreakout();
+                    break;
+                case 'dodge':
+                    renderDodge();
                     break;
             }
 
@@ -613,6 +1010,25 @@ export class GameWebviewProvider {
             }
         }
 
+        function renderBreakout() {
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(gameState.paddle.x, gameState.paddle.y, gameState.paddle.width, gameState.paddle.height);
+            ctx.fillRect(gameState.ball.x, gameState.ball.y, gameState.ball.size, gameState.ball.size);
+            for (let brick of gameState.bricks) {
+                if (brick.alive) {
+                    ctx.fillRect(brick.x, brick.y, brick.w, brick.h);
+                }
+            }
+        }
+
+        function renderDodge() {
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(gameState.player.x, gameState.player.y, gameState.player.width, gameState.player.height);
+            for (let m of gameState.meteors) {
+                ctx.fillRect(m.x, m.y, m.w, m.h);
+            }
+        }
+
         function handleGameOver() {
             vscode.postMessage({
                 command: 'gameOver',
@@ -621,7 +1037,7 @@ export class GameWebviewProvider {
             });
             
             // Show countdown
-            document.getElementById('gameOverMessage').style.display = 'block';
+            document.getElementById('gameOverMessage').style.display = 'flex';
             let countdown = 2;
             const countdownElement = document.getElementById('countdown');
             
@@ -667,7 +1083,10 @@ export class GameWebviewProvider {
         }
 
         document.addEventListener('keydown', (e) => {
+            keysDown.add(e.key);
             if (!gameState || gameState.gameOver) return;
+
+            fadeControlsHint();
 
             switch (currentGame.type) {
                 case 'snake':

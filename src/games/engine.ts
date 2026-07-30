@@ -17,7 +17,7 @@ export function getRandomBreakText(): string {
 
 export interface GameData {
     name: string;
-    type: 'snake' | 'pong' | 'invaders';
+    type: 'snake' | 'pong' | 'invaders' | 'breakout' | 'dodge';
     description: string;
     highScore?: number;
 }
@@ -38,6 +38,16 @@ export class GameEngine {
             name: 'Space Invaders',
             type: 'invaders',
             description: 'Save Earth from the alien invasion!'
+        },
+        {
+            name: 'Brick Breaker',
+            type: 'breakout',
+            description: 'Clear the bricks before the ball escapes!'
+        },
+        {
+            name: 'Meteor Dodge',
+            type: 'dodge',
+            description: 'Dodge falling meteors and survive as long as you can!'
         }
     ];
 

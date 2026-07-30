@@ -1,8 +1,8 @@
 {
   "name": "context-snack",
-  "displayName": "🍿 Context Snack (for Cursor)",
+  "displayName": "\ud83c\udf7f Context Snack (for Cursor)",
   "description": "Achieve micro-learnings while your agent works! (because developers never have enough context switches...)",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "publisher": "ofershap",
   "author": "Ofer Shapira",
   "license": "MIT",
