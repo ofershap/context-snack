@@ -247,7 +247,7 @@ export class GameWebviewProvider {
         </div>
         <button id="newGameBtn" onclick="requestNewGame()">New Game</button>
         <button id="feedBtn" onclick="requestFeed()">📰 News instead</button>
-        <button id="muteBtn" onclick="muteChat()" title="Mute for this chat only">Mute chat</button>
+        <button id="muteBtn" class="chrome-icon-btn" onclick="muteChat()" title="Do not pop Context Snack for the current agent conversation" aria-label="Do not pop Context Snack for the current agent conversation">🔕</button>
         <button id="closeBtn" onclick="closeGame()">Close</button>
     </div>
     ${closeCountdownMarkup()}
@@ -654,6 +654,13 @@ export class GameWebviewProvider {
         }
 
         function muteChat() {
+            const btn = document.getElementById('muteBtn');
+            if (btn) {
+                btn.textContent = '🔇';
+                btn.title = 'Context Snack muted for the current agent conversation';
+                btn.setAttribute('aria-label', 'Context Snack muted for the current agent conversation');
+                btn.classList.add('is-muted');
+            }
             vscode.postMessage({
                 command: 'muteChat'
             });

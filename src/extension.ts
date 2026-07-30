@@ -64,11 +64,11 @@ export async function activate(context: vscode.ExtensionContext) {
         hideSnack();
         if (muted.length > 0) {
             vscode.window.showInformationMessage(
-                'Context Snack muted for this chat. New chats will still show it.'
+                'Context Snack will not pop up for the current agent conversation. New conversations still get snacks.'
             );
         } else {
             vscode.window.showInformationMessage(
-                'No active agent chat to mute — closed Context Snack anyway.'
+                'No active agent conversation to mute - closed Context Snack anyway.'
             );
         }
     };

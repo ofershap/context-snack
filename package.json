@@ -149,7 +149,7 @@
       },
       {
         "command": "contextSnack.muteCurrentChat",
-        "title": "Mute for This Chat",
+        "title": "Don't Pop for Current Conversation",
         "category": "Context Snack"
       },
       {

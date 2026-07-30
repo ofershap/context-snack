@@ -83,8 +83,23 @@ export function feedWebviewStyles(): string {
         }
         .card-chrome-actions {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             flex-shrink: 0;
+            align-items: center;
+        }
+        .chrome-icon-btn {
+            width: 30px;
+            height: 28px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            line-height: 1;
+        }
+        .chrome-icon-btn.is-muted {
+            opacity: 0.75;
+            border-color: rgba(46,184,166,0.4);
         }
 
         .card-header { margin-bottom: 2px; flex-shrink: 0; }
