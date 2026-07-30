@@ -1,0 +1,25 @@
+---
+description: Context Snack architecture and constraints for agents
+alwaysApply: true
+---
+
+# Context Snack
+
+Cursor extension: micro-learning feed while the agent is busy. Feed-first; games never auto-open.
+
+## Layout
+
+- `src/extension.ts` - activate, commands, status bar, watcher wiring
+- `src/agent/` - hooks install, busy watcher, mute store
+- `src/feed/` - fetch, quality, cache, order, webview
+- `src/feed/sources/` - one module per source + `registry.ts`
+- `src/games/` - optional retro games
+- `src/mood/` - optional reactions (needs `assets/reactions/`)
+
+## Constraints
+
+- Never wipe `~/.cursor/hooks.json` on parse failure
+- Auto-show only when a project is open and workspace roots match
+- Card quality: reject empty / fake / URL-only summaries
+- After feed/UI changes: follow `ui-verify.mdc` (compile + judge + preview + read screenshot)
+- Product decisions: `CONTEXT.md`

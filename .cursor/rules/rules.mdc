@@ -1,0 +1,10 @@
+---
+alwaysApply: true
+---
+
+# Agent rules
+
+- we run cursor ide (not vscode)
+- we've installed vsce and this is how we implemented it to cursor
+- use symlink to connect our code to cursor as extension
+- after UI/feed changes: run `node scripts/judge-feed.cjs` + `node scripts/judge-sources.cjs` (after fetcher/cache changes) + `node scripts/preview-feed.cjs`, then Read `.preview/feed-preview.png` before claiming it works

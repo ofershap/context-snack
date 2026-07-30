@@ -1,0 +1,20 @@
+---
+description: After every Context Snack UI or feed change, verify visually and judge content quality
+alwaysApply: true
+---
+
+# UI / feed verification (mandatory)
+
+After ANY change to feed UI, webview HTML/CSS/JS, card rendering, fetcher, cache, or auto-show behavior:
+
+1. `npm run compile`
+2. `node scripts/judge-feed.cjs` (add `--refresh` if fetcher/cache changed) — read the sample deck and reject weak/fake summaries
+3. `node scripts/judge-sources.cjs` (after fetcher/cache changes) — per-source quality gate
+4. `node scripts/preview-feed.cjs` — opens a Playwright screenshot of the real webview HTML with live cache cards
+5. **Read the screenshot** (`.preview/feed-preview.png`) with the Read tool and confirm:
+   - card chrome (title + close) is visible
+   - at least one card shows a real title + readable summary (not empty, not "Quick hit…")
+   - progress is not stuck on `— / —`
+5. Do not tell the user it works until steps 2–5 pass
+
+Never ship a UI change based only on TypeScript compile success.

@@ -1,0 +1,171 @@
+{
+  "name": "context-snack",
+  "displayName": "🍿 Context Snack",
+  "description": "Micro-learnings while your agent works - because developers never have enough context switches.",
+  "version": "1.1.0",
+  "publisher": "ofershap",
+  "author": "Ofer Shapira",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ofershap/context-snack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ofershap/context-snack/issues"
+  },
+  "homepage": "https://github.com/ofershap/context-snack#readme",
+  "keywords": [
+    "productivity",
+    "learning",
+    "waiting",
+    "agent",
+    "news",
+    "microlearning",
+    "cursor",
+    "feed"
+  ],
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Context Snack",
+      "properties": {
+        "contextSnack.autoShow": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically show Context Snack while the Cursor agent is working"
+        },
+        "contextSnack.showDelayMs": {
+          "type": "number",
+          "default": 3000,
+          "description": "How long the agent must be busy (in milliseconds) before Context Snack pops up. Prevents interruptions for quick replies."
+        },
+        "contextSnack.feedRefreshMinutes": {
+          "type": "number",
+          "default": 45,
+          "minimum": 5,
+          "description": "How often (in minutes) to refresh the cached micro-learning feed in the background."
+        },
+        "contextSnack.enableGames": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable retro games (Play a Game command and in-feed Play button). Games never auto-open."
+        },
+        "contextSnack.enableMood": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable the mood reaction status bar button and command."
+        },
+        "contextSnack.sources": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Which feed sources to include when refreshing Context Snack.",
+          "properties": {
+            "cursor": {
+              "type": "boolean",
+              "default": true,
+              "description": "Cursor Changelog"
+            },
+            "tldr": {
+              "type": "boolean",
+              "default": true,
+              "description": "TLDR AI"
+            },
+            "devto": {
+              "type": "boolean",
+              "default": true,
+              "description": "Dev.to"
+            },
+            "hn": {
+              "type": "boolean",
+              "default": true,
+              "description": "Hacker News"
+            },
+            "github": {
+              "type": "boolean",
+              "default": true,
+              "description": "GitHub Trending"
+            },
+            "producthunt": {
+              "type": "boolean",
+              "default": true,
+              "description": "Product Hunt"
+            },
+            "geeky": {
+              "type": "boolean",
+              "default": true,
+              "description": "Lobsters / Show HN"
+            }
+          },
+          "default": {
+            "cursor": true,
+            "tldr": true,
+            "devto": true,
+            "hn": true,
+            "github": true,
+            "producthunt": true,
+            "geeky": true
+          }
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "contextSnack.showGame",
+        "title": "Play a Game",
+        "category": "Context Snack"
+      },
+      {
+        "command": "contextSnack.showFeed",
+        "title": "Open Context Snack",
+        "category": "Context Snack"
+      },
+      {
+        "command": "contextSnack.hideGame",
+        "title": "Hide Context Snack",
+        "category": "Context Snack"
+      },
+      {
+        "command": "contextSnack.muteCurrentChat",
+        "title": "Mute for This Chat",
+        "category": "Context Snack"
+      },
+      {
+        "command": "contextSnack.showStats",
+        "title": "Show Statistics",
+        "category": "Context Snack"
+      },
+      {
+        "command": "contextSnack.showMoodReaction",
+        "title": "Show Mood Reaction",
+        "category": "Context Snack"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run compile && node --test test/*.test.js",
+    "package": "vsce package --allow-star-activation --out context-snack.vsix",
+    "judge-feed": "npm run compile && node scripts/judge-feed.cjs",
+    "judge-sources": "npm run compile && node scripts/judge-sources.cjs",
+    "preview-feed": "npm run compile && node scripts/preview-feed.cjs",
+    "verify-feed": "npm run compile && node scripts/judge-feed.cjs && node scripts/judge-sources.cjs && node scripts/preview-feed.cjs"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@vscode/vsce": "^3.3.2",
+    "typescript": "^4.9.4"
+  }
+}
