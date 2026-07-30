@@ -7,6 +7,13 @@ updates:
     groups:
       all-dependencies:
         patterns: ["*"]
+        exclude-patterns:
+          - "typescript"
+          - "@types/node"
+          - "@types/vscode"
+    ignore:
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
