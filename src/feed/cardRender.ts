@@ -96,7 +96,7 @@ export function renderCardInnerHtml(card: FeedCard): string {
         footerParts.push('<span class="card-meta"></span>');
     }
     if (card.url) {
-        footerParts.push('<span class="card-open">Open ↗</span>');
+        footerParts.push('<button type="button" class="card-open" onclick="openCurrent()">Open ↗</button>');
     }
     const footer = `<div class="card-footer">${footerParts.join('')}</div>`;
 

@@ -189,9 +189,23 @@ export function feedWebviewStyles(): string {
         }
         .card-meta { color: #7a726a; }
         .card-open {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 11px;
             color: #2eb8a6;
             font-weight: 600;
             letter-spacing: 0.02em;
+            cursor: pointer;
+        }
+        .card-open:hover {
+            background: none;
+            border-color: transparent;
+            text-decoration: underline;
+        }
+        body.vscode-light .card-open {
+            background: none;
+            color: #2eb8a6;
         }
 
         .indicator {
