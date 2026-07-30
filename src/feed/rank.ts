@@ -2,7 +2,7 @@ import { FeedCard } from './types';
 
 type SourceTier = 'curated' | 'changelog' | 'community' | 'aggregator';
 
-const CURATED_SOURCES = new Set(['Superhuman AI', 'The Rundown AI', "Ben's Bites", 'TLDR AI']);
+const CURATED_SOURCES = new Set(['Superhuman AI', 'The Rundown AI', 'TLDR AI']);
 const CHANGELOG_SOURCES = new Set(['Cursor Changelog']);
 const AGGREGATOR_SOURCES = new Set(['Hacker News', 'GitHub Trending', 'Product Hunt']);
 

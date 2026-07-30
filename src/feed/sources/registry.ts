@@ -1,5 +1,4 @@
 import { FeedCard } from '../types';
-import { fetchBensBites } from './bensbites';
 import { fetchCursorChangelog } from './cursor';
 import { fetchDevTo } from './devto';
 import { fetchGeekyFun } from './geeky';
@@ -14,7 +13,6 @@ export type FeedSourceId =
     | 'cursor'
     | 'superhuman'
     | 'rundown'
-    | 'bensbites'
     | 'tldr'
     | 'devto'
     | 'hn'
@@ -33,7 +31,6 @@ export const FEED_SOURCES: readonly FeedSourceDef[] = [
     { id: 'cursor', label: 'Cursor Changelog', defaultEnabled: true, fetch: () => fetchCursorChangelog() },
     { id: 'superhuman', label: 'Superhuman AI', defaultEnabled: true, fetch: () => fetchSuperhumanAi() },
     { id: 'rundown', label: 'The Rundown AI', defaultEnabled: true, fetch: () => fetchRundownAi() },
-    { id: 'bensbites', label: "Ben's Bites", defaultEnabled: true, fetch: () => fetchBensBites() },
     { id: 'tldr', label: 'TLDR AI', defaultEnabled: true, fetch: () => fetchTldrAi() },
     { id: 'devto', label: 'Dev.to', defaultEnabled: true, fetch: () => fetchDevTo() },
     { id: 'hn', label: 'Hacker News', defaultEnabled: true, fetch: () => fetchHackerNews() },

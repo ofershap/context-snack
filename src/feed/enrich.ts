@@ -38,7 +38,7 @@ function extractOgImage(html: string): string | undefined {
     return undefined;
 }
 
-export function extractArticleSummary(html: string): string | undefined {
+function extractArticleSummary(html: string): string | undefined {
     const cleaned = html
         .replace(/<script[\s\S]*?<\/script>/gi, ' ')
         .replace(/<style[\s\S]*?<\/style>/gi, ' ')

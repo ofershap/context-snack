@@ -95,7 +95,6 @@ Details, uninstall steps, and vulnerability reporting: **[SECURITY.md](SECURITY.
 | `contextSnack.sources.cursor` | `true` | Cursor changelog |
 | `contextSnack.sources.superhuman` | `true` | Superhuman AI |
 | `contextSnack.sources.rundown` | `true` | The Rundown AI |
-| `contextSnack.sources.bensbites` | `true` | Ben's Bites |
 | `contextSnack.sources.tldr` | `true` | TLDR AI |
 | `contextSnack.sources.hn` | `true` | Hacker News |
 | `contextSnack.sources.devto` | `true` | Dev.to |
