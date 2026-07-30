@@ -1,6 +1,6 @@
 # Publishing Context Snack to marketplaces
 
-Plan for shipping updates to Cursor users. **Not yet published** to Open VSX or the VS Code Marketplace at the time this doc was written; verify release status on [GitHub Releases](https://github.com/ofershap/context-snack/releases) and [open-vsx.org](https://open-vsx.org).
+Maintainer notes for shipping updates. **Live on Open VSX:** [ofershap/context-snack](https://open-vsx.org/extension/ofershap/context-snack). VS Code Marketplace is optional and not required for Cursor.
 
 ## Why Open VSX first for Cursor
 

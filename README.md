@@ -5,9 +5,9 @@
 <p align="center"><strong>Micro-learnings while your agent works - because developers never have enough context switches.</strong></p>
 
 <p align="center">
-  <a href="https://github.com/ofershap/context-snack#quick-start"><strong>Try It</strong></a>
+  <a href="https://open-vsx.org/extension/ofershap/context-snack"><strong>Install</strong></a>
   ·
-  <a href="https://github.com/ofershap/context-snack/releases"><strong>Install</strong></a>
+  <a href="https://github.com/ofershap/context-snack#quick-start"><strong>Quick Start</strong></a>
   ·
   <a href="SECURITY.md"><strong>Privacy</strong></a>
 </p>
@@ -40,16 +40,24 @@ Feed sources are scraped or fetched from public sites. Layouts change, APIs shif
 
 ## Quick start
 
-### Install from VSIX (recommended today)
+### Install in Cursor
 
-Until the extension is listed on [Open VSX](https://open-vsx.org) for one-click install in Cursor, use a release build:
+1. Open **Extensions** in Cursor.
+2. Search for **Context Snack** (or `ofershap.context-snack`).
+3. Click **Install**.
+4. Reload if prompted, then run **Context Snack: Open Context Snack**.
 
-1. Download `context-snack-*.vsix` from [GitHub Releases](https://github.com/ofershap/context-snack/releases).
-2. In Cursor: **Command Palette** → **Extensions: Install from VSIX...** → select the file.
-3. Reload or restart Cursor.
-4. Run **Context Snack: Open Context Snack** to confirm it loaded.
+Listing: [open-vsx.org/extension/ofershap/context-snack](https://open-vsx.org/extension/ofershap/context-snack)
 
-On first activation the extension installs Cursor hook entries and copies the agent-state hook script into your user `~/.cursor` directory (see [Security & privacy](#security--privacy)).
+On first activation the extension merges Cursor hook entries and copies the agent-state hook script into `~/.cursor` (see [Security & privacy](#security--privacy)).
+
+### Install from VSIX (fallback)
+
+If search is empty (Cursor's Open VSX mirror can lag):
+
+1. Download the `.vsix` from [GitHub Releases](https://github.com/ofershap/context-snack/releases).
+2. **Command Palette** → **Extensions: Install from VSIX...** → select the file.
+3. Reload Cursor.
 
 ### Build from source (contributors)
 
@@ -60,9 +68,9 @@ npm install
 npm run compile
 ```
 
-Press **F5** (or **Run Extension** from `.vscode/launch.json`) to launch an Extension Development Host, or symlink the folder to `~/.cursor/extensions/context-snack-1.2.0` and reload the window.
+Press **F5** (or **Run Extension** from `.vscode/launch.json`) to launch an Extension Development Host, or symlink the folder to `~/.cursor/extensions/context-snack-1.2.1` and reload the window.
 
-Marketplace publishing steps for maintainers: [docs/MARKETPLACE.md](docs/MARKETPLACE.md).
+Maintainer publish notes: [docs/MARKETPLACE.md](docs/MARKETPLACE.md).
 
 ## Security & privacy
 

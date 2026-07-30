@@ -46,7 +46,7 @@ Do not claim success from compile only. Run: `npm test`, `judge-feed` (`--refres
 - README: user story, install, settings, architecture sketch
 - SECURITY.md: disk, network, uninstall hooks
 - CONTRIBUTING.md: dev loop, new source checklist
-- docs/MARKETPLACE.md: Open VSX publish plan (not claiming live listing)
+- docs/MARKETPLACE.md: Open VSX publish / update steps (live listing: ofershap.context-snack)
 - AGENTS.md: maintainer feed preview loop
 
 ## Out of scope for agents unless asked
