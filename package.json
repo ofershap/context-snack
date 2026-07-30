@@ -166,6 +166,6 @@
     "@types/node": "^22.13.10",
     "@types/vscode": "^1.99.0",
     "@vscode/vsce": "^3.3.2",
-    "typescript": "~5.8.2"
+    "typescript": "~5.9.3"
   }
 }
