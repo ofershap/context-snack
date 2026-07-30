@@ -4,7 +4,7 @@ Short reference for AI agents working in this repo. Human-facing docs: README, S
 
 ## Product (locked)
 
-- **Tagline:** Micro-learnings while your agent works - because developers never have enough context switches.
+- **Tagline:** Achieve micro-learnings while your agent works! (because developers never have enough context switches...)
 - **Wedge:** Agent is thinking → user gets a Context Snack (feed), not a forced mini-game.
 - **Feed-first.** Games (Snake, Pong, Invaders) are optional; **games NEVER auto-open.** Mood reactions were removed.
 - Free, MIT, publisher `ofershap` (same Open VSX namespace as Cursor Office), repo https://github.com/ofershap/context-snack

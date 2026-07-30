@@ -2,11 +2,12 @@
   <img src="assets/icon.png" alt="Context Snack" width="128" height="128" />
 </p>
 
-<p align="center">
-  <h1>Context Snack</h1>
-</p>
+<h1 align="center">Context Snack (for Cursor)</h1>
 
-<p align="center"><strong>Micro-learnings while your agent works - because developers never have enough context switches.</strong></p>
+<p align="center">
+  <strong>Achieve micro-learnings while your agent works!</strong><br/>
+  <sub>(because developers never have enough context switches...)</sub>
+</p>
 
 <p align="center">
   <a href="https://open-vsx.org/extension/ofershap/context-snack"><strong>Install</strong></a>
