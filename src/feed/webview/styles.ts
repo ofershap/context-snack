@@ -75,10 +75,22 @@ export function feedWebviewStyles(): string {
             padding-bottom: 8px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
         }
+        .card-chrome-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 0;
+        }
         .card-chrome-title {
             font-size: 13px;
             font-weight: 600;
             color: #ebe4dc;
+            letter-spacing: 0.01em;
+        }
+        .card-chrome-subtitle {
+            font-size: 10px;
+            font-weight: 500;
+            color: #7a726a;
             letter-spacing: 0.01em;
         }
         .card-chrome-actions {
