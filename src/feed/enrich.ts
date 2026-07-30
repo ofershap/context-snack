@@ -169,9 +169,14 @@ function needsRicherSummary(card: FeedCard): boolean {
     return card.summary.trim().length < MIN_SNACK_SUMMARY_LENGTH;
 }
 
+// Multi-story digest pages (one URL covers several unrelated stories) don't have
+// a single og:image that represents every story pulled from that page, so an
+// image grabbed from the page would mislead as often as it'd help.
+const NO_IMAGE_ENRICHMENT_SOURCES = new Set(['Superhuman AI']);
+
 export async function enrichWithOg(cards: FeedCard[]): Promise<void> {
     const pending = cards.filter(c =>
-        c.url && (needsRicherSummary(c) || !c.image)
+        c.url && (needsRicherSummary(c) || (!c.image && !NO_IMAGE_ENRICHMENT_SOURCES.has(c.source)))
     );
     let cursor = 0;
 
@@ -206,7 +211,7 @@ export async function enrichWithOg(cards: FeedCard[]): Promise<void> {
                         card.summary = article;
                     }
                 }
-                if (!card.image) {
+                if (!card.image && !NO_IMAGE_ENRICHMENT_SOURCES.has(card.source)) {
                     const image = extractOgImage(html);
                     if (image) {
                         card.image = image;
