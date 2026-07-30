@@ -2,10 +2,11 @@
   "name": "context-snack",
   "displayName": "🍿 Context Snack",
   "description": "Micro-learnings while your agent works - because developers never have enough context switches.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "publisher": "ofershap",
   "author": "Ofer Shapira",
   "license": "MIT",
+  "icon": "assets/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/ofershap/context-snack.git"

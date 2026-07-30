@@ -19,4 +19,6 @@ CONTRIBUTING.md
 .cursor/rules/**
 .cursor/hooks.json
 assets/.gitkeep
+assets/icon-256.png
+assets/preview-on-checker.png
 **/*.vsix
