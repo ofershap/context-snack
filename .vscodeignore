@@ -18,7 +18,6 @@ CONTRIBUTING.md
 .vscode/**
 .cursor/rules/**
 .cursor/hooks.json
-assets/.gitkeep
-assets/icon-256.png
-assets/preview-on-checker.png
+assets/*
+!assets/icon.png
 **/*.vsix
