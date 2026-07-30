@@ -1,3 +1,4 @@
+import { dedupeCards } from './dedupe';
 import { enrichWithOg } from './enrich';
 import { isUselessSummary } from './quality';
 import { FeedCard } from './types';
@@ -89,5 +90,5 @@ export async function fetchAllCards(enabledIds?: FeedSourceId[]): Promise<FeedCa
         }
     }
     const filtered = await finalizeCards(cards);
-    return interleaveByCategory(filtered);
+    return interleaveByCategory(dedupeCards(filtered));
 }

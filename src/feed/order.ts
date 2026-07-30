@@ -1,4 +1,5 @@
 import { FeedCard } from './types';
+import { scoreCard } from './rank';
 
 export function shuffleInPlace<T>(items: T[]): T[] {
     for (let i = items.length - 1; i > 0; i--) {
@@ -8,6 +9,14 @@ export function shuffleInPlace<T>(items: T[]): T[] {
         items[j] = tmp;
     }
     return items;
+}
+
+function scoreSort(cards: FeedCard[]): FeedCard[] {
+    const jitterRange = 8;
+    return cards
+        .map(card => ({ card, weight: scoreCard(card) + Math.random() * jitterRange }))
+        .sort((a, b) => b.weight - a.weight)
+        .map(entry => entry.card);
 }
 
 export function orderCardsForSession(cards: FeedCard[], seenIds: Set<string>): FeedCard[] {
@@ -22,5 +31,5 @@ export function orderCardsForSession(cards: FeedCard[], seenIds: Set<string>): F
         }
     }
 
-    return [...shuffleInPlace(unseen), ...shuffleInPlace(seen)];
+    return [...scoreSort(unseen), ...shuffleInPlace(seen)];
 }

@@ -93,6 +93,9 @@ Details, uninstall steps, and vulnerability reporting: **[SECURITY.md](SECURITY.
 | `contextSnack.feedRefreshMinutes` | `45` | Background refresh interval for the cached feed (min 5). |
 | `contextSnack.enableGames` | `true` | Allow **Play a Game** and the in-feed Play control. Games never auto-open. |
 | `contextSnack.sources.cursor` | `true` | Cursor changelog |
+| `contextSnack.sources.superhuman` | `true` | Superhuman AI |
+| `contextSnack.sources.rundown` | `true` | The Rundown AI |
+| `contextSnack.sources.bensbites` | `true` | Ben's Bites |
 | `contextSnack.sources.tldr` | `true` | TLDR AI |
 | `contextSnack.sources.hn` | `true` | Hacker News |
 | `contextSnack.sources.devto` | `true` | Dev.to |
@@ -108,7 +111,7 @@ Toggle sources in **Settings** → search `contextSnack`.
 | --- | --- |
 | **Context Snack: Open Context Snack** | Open the feed panel manually. |
 | **Context Snack: Hide Context Snack** | Close the feed or game panel. |
-| **Context Snack: Mute for This Chat** | Skip auto-show for active agent conversations. |
+| **Context Snack: Don't Pop for Current Conversation** | Stop auto-show for the current agent conversation. |
 | **Context Snack: Play a Game** | Open Snake, Pong, or Space Invaders (if enabled). |
 | **Context Snack: Show Statistics** | Local snack stats (opens, streaks, etc.). |
 

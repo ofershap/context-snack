@@ -21,7 +21,13 @@ Short reference for AI agents working in this repo. Human-facing docs: README, S
 
 ## Feed sources
 
-Registry in `src/feed/sources/registry.ts`. IDs: cursor, tldr, hn, devto, github, producthunt, geeky (Lobsters / Show HN style). Each source can fail independently. **Scrapers break often;** maintain best-effort, graceful skip.
+Registry in `src/feed/sources/registry.ts`. IDs: cursor, superhuman, rundown, bensbites, tldr, hn, devto, github, producthunt, geeky (Lobsters / Show HN style). Each source can fail independently. **Scrapers break often;** maintain best-effort, graceful skip.
+
+**Curated tier (superhuman, rundown, bensbites, tldr):** scrape already-edited newsletter archives (human-written headlines/summaries), not raw firehoses. `superhuman.ts`/`rundown.ts` intentionally leave `summary` unset so the existing `enrichWithOg` og:description pipeline fills it from the linked article page — do not add bespoke summary-scraping to those two files.
+
+**Ranking (`rank.ts`):** replaces the old pure-random shuffle. Scores each card by source tier (curated > changelog > community > raw aggregator) plus small local heuristic bonuses (specific numbers in title/summary, named byline in `meta`, summary length/richness). 100% local, no LLM or extra network calls. `order.ts` sorts unseen cards by this score plus a small random jitter; seen cards remain fully shuffled.
+
+**Dedup (`dedupe.ts`):** drops near-duplicate cards across sources by title token-overlap before caching, so the same story from two sources doesn't burn two card slots.
 
 ## Verification after UI/feed edits
 
