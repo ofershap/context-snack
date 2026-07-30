@@ -24,6 +24,7 @@ export class AgentStateWatcher implements vscode.Disposable {
     private showTimer: NodeJS.Timeout | undefined;
     private lastBusy = false;
     private isShowing = false;
+    private lastSeenConversationIds: string[] = [];
 
     constructor(
         private readonly onBusy: () => void,
@@ -42,7 +43,8 @@ export class AgentStateWatcher implements vscode.Disposable {
     }
 
     muteActiveConversations(): string[] {
-        const ids = this.getActiveConversationIds();
+        const active = this.getActiveConversationIds();
+        const ids = active.length > 0 ? active : this.lastSeenConversationIds;
         if (ids.length === 0) {
             return [];
         }
@@ -78,9 +80,10 @@ export class AgentStateWatcher implements vscode.Disposable {
         return entryRoots.some(root => normalizedCurrent.includes(path.resolve(root)));
     }
 
-    private getActiveConversationIds(): string[] {
-        const state = this.readState();
-        const conversations = state?.conversations;
+    private collectWorkspaceConversationIds(
+        conversations: Record<string, ConversationEntry> | undefined,
+        options?: { ignoreStale?: boolean }
+    ): string[] {
         if (!conversations) {
             return [];
         }
@@ -88,7 +91,7 @@ export class AgentStateWatcher implements vscode.Disposable {
         const now = Date.now();
         const ids: string[] = [];
         for (const [id, entry] of Object.entries(conversations)) {
-            if (entry.startedAt !== undefined && now - entry.startedAt > STALE_MS) {
+            if (!options?.ignoreStale && entry.startedAt !== undefined && now - entry.startedAt > STALE_MS) {
                 continue;
             }
             if (!this.matchesCurrentWorkspace(entry.workspaceRoots)) {
@@ -99,16 +102,24 @@ export class AgentStateWatcher implements vscode.Disposable {
         return ids;
     }
 
+    private getActiveConversationIds(): string[] {
+        return this.collectWorkspaceConversationIds(this.readState()?.conversations);
+    }
+
+    private rememberSeenConversations(state: AgentBusyState | undefined) {
+        const ids = this.collectWorkspaceConversationIds(state?.conversations, { ignoreStale: true });
+        if (ids.length > 0) {
+            this.lastSeenConversationIds = ids;
+        }
+    }
+
     private isEffectivelyBusy(state: AgentBusyState | undefined): boolean {
         const conversations = state?.conversations;
         if (!conversations) {
-            this.muteStore.pruneTo(new Set());
             return false;
         }
 
         const now = Date.now();
-        let busy = false;
-
         for (const [id, entry] of Object.entries(conversations)) {
             if (entry.startedAt !== undefined && now - entry.startedAt > STALE_MS) {
                 continue;
@@ -117,16 +128,17 @@ export class AgentStateWatcher implements vscode.Disposable {
                 continue;
             }
             if (!this.muteStore.isMuted(id)) {
-                busy = true;
+                return true;
             }
         }
 
-        this.muteStore.pruneTo(new Set(Object.keys(conversations)));
-        return busy;
+        return false;
     }
 
     private handleStateChange() {
-        const busy = this.isEffectivelyBusy(this.readState());
+        const state = this.readState();
+        this.rememberSeenConversations(state);
+        const busy = this.isEffectivelyBusy(state);
         if (busy === this.lastBusy) {
             return;
         }

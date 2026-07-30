@@ -2,7 +2,7 @@
   "name": "context-snack",
   "displayName": "🍿 Context Snack",
   "description": "Micro-learnings while your agent works - because developers never have enough context switches.",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "publisher": "ofershap",
   "author": "Ofer Shapira",
   "license": "MIT",

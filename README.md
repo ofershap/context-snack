@@ -32,6 +32,8 @@ You asked Cursor to refactor, debug, or ship a feature. The agent is running. Th
 
 Feed sources are scraped or fetched from public sites. Layouts change, APIs shift, and parsers drift. Maintenance is best-effort; a broken source should degrade gracefully, not take down the extension.
 
+![Demo](assets/demo.gif)
+
 ## What's different
 
 | | Context Snack | Typical "wait screen" |
@@ -72,7 +74,7 @@ npm install
 npm run compile
 ```
 
-Press **F5** (or **Run Extension** from `.vscode/launch.json`) to launch an Extension Development Host, or symlink the folder to `~/.cursor/extensions/context-snack-1.2.3` and reload the window.
+Press **F5** (or **Run Extension** from `.vscode/launch.json`) to launch an Extension Development Host, or symlink the folder to `~/.cursor/extensions/context-snack-1.2.4` and reload the window.
 
 Maintainer publish notes: [docs/MARKETPLACE.md](docs/MARKETPLACE.md).
 

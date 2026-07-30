@@ -20,4 +20,5 @@ CONTRIBUTING.md
 .cursor/hooks.json
 assets/*
 !assets/icon.png
+!assets/demo.gif
 **/*.vsix

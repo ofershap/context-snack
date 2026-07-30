@@ -120,7 +120,7 @@ export function feedWebviewStyles(): string {
         .card-image-wrap {
             flex-shrink: 0;
             width: 100%;
-            height: clamp(64px, 22%, 110px);
+            height: clamp(128px, 44%, 220px);
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 8px;

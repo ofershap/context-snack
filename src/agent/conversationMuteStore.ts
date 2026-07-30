@@ -38,19 +38,6 @@ export class ConversationMuteStore {
         }
     }
 
-    pruneTo(activeIds: Set<string>) {
-        let changed = false;
-        for (const id of [...this.ids]) {
-            if (!activeIds.has(id)) {
-                this.ids.delete(id);
-                changed = true;
-            }
-        }
-        if (changed) {
-            this.save();
-        }
-    }
-
     private load() {
         try {
             if (!fs.existsSync(this.mutePath)) {

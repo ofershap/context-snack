@@ -14,7 +14,7 @@ Short reference for AI agents working in this repo. Human-facing docs: README, S
 
 1. **Hooks:** On activate, merge into `~/.cursor/hooks.json` (never wipe on parse failure). Install `~/.cursor/hooks/context-snack-agent-state.mjs` from extension bundle.
 2. **Hook script:** Cursor events `beforeSubmitPrompt`, `stop`, `sessionEnd` update `~/.cursor/context-snack/busy.json` (active conversations, timestamps, workspace roots).
-3. **AgentStateWatcher:** FS watch + poll on `busy.json`. **Workspace gating:** only treat busy if conversation roots overlap current workspace folders. **showDelayMs** before calling show. **Mute store** per conversation id.
+3. **AgentStateWatcher:** FS watch + poll on `busy.json`. **Workspace gating:** only treat busy if conversation roots overlap current workspace folders. **showDelayMs** before calling show. **Mute store** per conversation id - must persist across idle/busy cycles for that chat (do not prune mutes when `busy.json` clears).
 4. **Feed:** Background refresh → cache under `~/.cursor/context-snack/`. Webview shows shuffled cards; **seen** tracking avoids immediate repeats. **Quality bar** in `quality.ts` (min summary length, reject URL-only / teaser junk).
 5. **Soft-close:** When agent goes idle, feed uses countdown UI (`closeCountdownUi`) instead of hard instant hide.
 6. **Side features:** Games are a separate webview, gated by `enableGames`.
