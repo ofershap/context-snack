@@ -24,7 +24,7 @@
 
 You asked Cursor to refactor, debug, or ship a feature. The agent is running. That gap is dead time unless you turn it into a tiny learning moment.
 
-**Context Snack** opens a swipeable micro-learning feed when the agent has been busy long enough (configurable). Read a changelog item, skim AI news, or peek at what is trending. Close it when you are done. Optional retro games and mood reactions live on the side: they only open when you click a command or button, never on their own.
+**Context Snack** opens a swipeable micro-learning feed when the agent has been busy long enough (configurable). Read a changelog item, skim AI news, or peek at what is trending. Close it when you are done. Optional retro games are available on click only - never auto-opened.
 
 Feed sources are scraped or fetched from public sites. Layouts change, APIs shift, and parsers drift. Maintenance is best-effort; a broken source should degrade gracefully, not take down the extension.
 
@@ -60,7 +60,7 @@ npm install
 npm run compile
 ```
 
-Press **F5** (or **Run Extension** from `.vscode/launch.json`) to launch an Extension Development Host, or symlink the folder to `~/.cursor/extensions/context-snack-1.1.0` and reload the window.
+Press **F5** (or **Run Extension** from `.vscode/launch.json`) to launch an Extension Development Host, or symlink the folder to `~/.cursor/extensions/context-snack-1.2.0` and reload the window.
 
 Marketplace publishing steps for maintainers: [docs/MARKETPLACE.md](docs/MARKETPLACE.md).
 
@@ -78,7 +78,6 @@ Details, uninstall steps, and vulnerability reporting: **[SECURITY.md](SECURITY.
 | `contextSnack.showDelayMs` | `3000` | Milliseconds the agent must stay busy before the feed appears. |
 | `contextSnack.feedRefreshMinutes` | `45` | Background refresh interval for the cached feed (min 5). |
 | `contextSnack.enableGames` | `true` | Allow **Play a Game** and the in-feed Play control. Games never auto-open. |
-| `contextSnack.enableMood` | `true` | Mood reaction command and status bar entry. |
 | `contextSnack.sources.cursor` | `true` | Cursor changelog |
 | `contextSnack.sources.tldr` | `true` | TLDR AI |
 | `contextSnack.sources.hn` | `true` | Hacker News |
@@ -97,7 +96,6 @@ Toggle sources in **Settings** → search `contextSnack`.
 | **Context Snack: Hide Context Snack** | Close the feed or game panel. |
 | **Context Snack: Mute for This Chat** | Skip auto-show for active agent conversations. |
 | **Context Snack: Play a Game** | Open Snake, Pong, or Space Invaders (if enabled). |
-| **Context Snack: Show Mood Reaction** | Open the mood webview (if enabled). |
 | **Context Snack: Show Statistics** | Local snack stats (opens, streaks, etc.). |
 
 **Feed controls:** drag or arrow keys to move between cards; swipe up, Enter, or the link control to open the article; Esc or close to dismiss. When the agent finishes, a short countdown offers a soft close instead of an instant snap shut.
@@ -117,7 +115,7 @@ Extension watches busy.json + workspace roots + per-chat mute
 After showDelayMs → feed webview (cached cards, shuffle + seen tracking)
 ```
 
-Optional paths: games webview, mood webview, stats. Feed fetchers live in `src/feed/sources/` and run on a timer into the local cache.
+Optional path: games webview (click-only). Feed fetchers live in `src/feed/sources/` and run on a timer into the local cache.
 
 ## Contributing
 

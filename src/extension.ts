@@ -7,7 +7,6 @@ import { resolveEnabledSourceIds } from './feed/sources/registry';
 import { FeedStatsManager } from './feed/stats';
 import { FeedWebviewProvider } from './feed/webview/provider';
 import { GameWebviewProvider } from './games/webviewProvider';
-import { MoodReactionProvider } from './mood/reactionProvider';
 
 export async function activate(context: vscode.ExtensionContext) {
     await installContextSnackHooks(context.extensionUri);
@@ -16,7 +15,6 @@ export async function activate(context: vscode.ExtensionContext) {
     const getFeedRefreshMinutes = () => cfg().get<number>('feedRefreshMinutes', 45);
     const getEnabledSourceIds = () => resolveEnabledSourceIds(cfg().get<Record<string, boolean>>('sources'));
     const gamesEnabled = () => cfg().get<boolean>('enableGames', true);
-    const moodEnabled = () => cfg().get<boolean>('enableMood', true);
 
     const muteStore = new ConversationMuteStore();
     const feedCache = new FeedCacheManager(getFeedRefreshMinutes, getEnabledSourceIds);
@@ -24,7 +22,6 @@ export async function activate(context: vscode.ExtensionContext) {
     const feedProvider = new FeedWebviewProvider(context.extensionUri, feedCache, feedStats, gamesEnabled);
 
     const gameProvider = gamesEnabled() ? new GameWebviewProvider(context.extensionUri) : undefined;
-    const moodProvider = moodEnabled() ? new MoodReactionProvider(context.extensionUri) : undefined;
 
     if (gameProvider) {
         gameProvider.onRequestFeed(() => {
@@ -124,15 +121,6 @@ export async function activate(context: vscode.ExtensionContext) {
                     });
                 }
             });
-        }),
-        vscode.commands.registerCommand('contextSnack.showMoodReaction', () => {
-            if (!moodProvider) {
-                vscode.window.showInformationMessage(
-                    'Mood reactions are disabled. Enable contextSnack.enableMood in settings.'
-                );
-                return;
-            }
-            moodProvider.showMoodPicker();
         })
     ];
 
@@ -142,15 +130,6 @@ export async function activate(context: vscode.ExtensionContext) {
     snackStatusBarItem.command = 'contextSnack.showFeed';
     snackStatusBarItem.show();
     subscriptions.push(snackStatusBarItem);
-
-    if (moodProvider) {
-        const moodStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-        moodStatusBarItem.text = '$(smiley) Mood';
-        moodStatusBarItem.tooltip = 'Click to express your mood with reactions!';
-        moodStatusBarItem.command = 'contextSnack.showMoodReaction';
-        moodStatusBarItem.show();
-        subscriptions.push(moodStatusBarItem);
-    }
 
     const autoShow = () => cfg().get<boolean>('autoShow', true);
     const showDelayMs = () => cfg().get<number>('showDelayMs', 3000);

@@ -6,8 +6,8 @@ Short reference for AI agents working in this repo. Human-facing docs: README, S
 
 - **Tagline:** Micro-learnings while your agent works - because developers never have enough context switches.
 - **Wedge:** Agent is thinking → user gets a Context Snack (feed), not a forced mini-game.
-- **Feed-first.** Games (Snake, Pong, Invaders) and Mood are optional; **games NEVER auto-open.**
-- Free, MIT, publisher `ofershap`, repo https://github.com/ofershap/context-snack
+- **Feed-first.** Games (Snake, Pong, Invaders) are optional; **games NEVER auto-open.** Mood reactions were removed.
+- Free, MIT, publisher `ofershap` (same Open VSX namespace as Cursor Office), repo https://github.com/ofershap/context-snack
 - Settings prefix: `contextSnack.*`, package name `context-snack`
 
 ## Architecture
@@ -17,7 +17,7 @@ Short reference for AI agents working in this repo. Human-facing docs: README, S
 3. **AgentStateWatcher:** FS watch + poll on `busy.json`. **Workspace gating:** only treat busy if conversation roots overlap current workspace folders. **showDelayMs** before calling show. **Mute store** per conversation id.
 4. **Feed:** Background refresh → cache under `~/.cursor/context-snack/`. Webview shows shuffled cards; **seen** tracking avoids immediate repeats. **Quality bar** in `quality.ts` (min summary length, reject URL-only / teaser junk).
 5. **Soft-close:** When agent goes idle, feed uses countdown UI (`closeCountdownUi`) instead of hard instant hide.
-6. **Side features:** Games and mood are separate webviews; gated by `enableGames` / `enableMood`.
+6. **Side features:** Games are a separate webview, gated by `enableGames`.
 
 ## Feed sources
 
@@ -39,7 +39,7 @@ Do not claim success from compile only. Run: `npm test`, `judge-feed` (`--refres
 
 ## Commands (palette)
 
-`showFeed`, `hideGame`, `muteCurrentChat`, `showGame`, `showMoodReaction`, `showStats` — all under category Context Snack.
+`showFeed`, `hideGame`, `muteCurrentChat`, `showGame`, `showStats` — all under category Context Snack.
 
 ## Docs map
 

@@ -2,7 +2,7 @@
   "name": "context-snack",
   "displayName": "🍿 Context Snack",
   "description": "Micro-learnings while your agent works - because developers never have enough context switches.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "ofershap",
   "author": "Ofer Shapira",
   "license": "MIT",
@@ -58,11 +58,6 @@
           "type": "boolean",
           "default": true,
           "description": "Enable retro games (Play a Game command and in-feed Play button). Games never auto-open."
-        },
-        "contextSnack.enableMood": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable the mood reaction status bar button and command."
         },
         "contextSnack.sources": {
           "type": "object",
@@ -141,11 +136,6 @@
       {
         "command": "contextSnack.showStats",
         "title": "Show Statistics",
-        "category": "Context Snack"
-      },
-      {
-        "command": "contextSnack.showMoodReaction",
-        "title": "Show Mood Reaction",
         "category": "Context Snack"
       }
     ]

@@ -6,17 +6,15 @@ Plan for shipping updates to Cursor users. **Not yet published** to Open VSX or 
 
 Cursor installs extensions from **[Open VSX](https://open-vsx.org)**, not the Microsoft Visual Studio Marketplace, for most built-in extension flows. VSIX from GitHub Releases remains the reliable fallback until listing and Cursor's proxy cache catch up.
 
-## Step 1: Claim the `ofershap` namespace on Open VSX
+## Step 1: Publisher namespace
 
-1. Sign in to [open-vsx.org](https://open-vsx.org) with GitHub.
-2. Claim or create the publisher namespace **`ofershap`** (must match `package.json` `"publisher"`).
-3. Create an **Personal Access Token** in Open VSX profile settings. Store it as `OPENVSX_TOKEN` (never commit it).
+Context Snack uses **`ofershap`** (same Open VSX namespace as [Cursor Office](https://open-vsx.org/extension/ofershap/cursor-office)).
 
-Update `package.json` before publish:
+Note: older Dirt Manager was published under **`ofer-shapira`**. Both namespaces are yours; keep Context Snack on `ofershap` so it matches GitHub and Cursor Office.
 
-- `"publisher": "ofershap"`
-- `"repository.url": "https://github.com/ofershap/context-snack"`
-- `"author"` as appropriate
+1. Sign in to [open-vsx.org](https://open-vsx.org) with GitHub (already done if you see your extensions).
+2. Confirm namespace **`ofershap`** exists under User Settings → Namespaces.
+3. Access token: [User Settings → Access Tokens](https://open-vsx.org/user-settings/tokens). Export as `OPENVSX_TOKEN` (or reuse `OPEN-VSX-API-TOKEN` from local dirt-manager `.env` if still valid). Never commit tokens.
 
 ## Step 2: Build the VSIX
 
