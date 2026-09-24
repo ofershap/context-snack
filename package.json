@@ -166,7 +166,7 @@
     "verify-feed": "npm run compile && node scripts/judge-feed.cjs && node scripts/judge-sources.cjs && node scripts/preview-feed.cjs"
   },
   "devDependencies": {
-    "@types/node": "^26.5.1",
+    "@types/node": "^26.6.2",
     "@types/vscode": "^1.137.0",
     "@vscode/vsce": "^3.3.2",
     "typescript": "~5.9.3"
